@@ -27,20 +27,38 @@ O **Docker** é uma plataforma que permite criar, distribuir e rodar aplicaçõe
 
 No Linux (Ubuntu/Debian), siga os passos básicos:
 
+### 1.1. Atualize o sistema
 ```bash
-sudo apt-get update
-sudo apt-get install -y docker.io docker-compose
-sudo systemctl enable --now docker
-sudo usermod -aG docker $USER  # permite rodar Docker sem sudo
+sudo apt update
+sudo apt upgrade
 ```
-
-Teste a instalação:
-
+### 1.2. Instale pacotes necessários
 ```bash
-docker --version
-docker compose version
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
 ```
-
+### 1.3. Adicione a chave GPG do Docker
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
+### 1.4. Adicione o repositório do Docker
+```bash
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+### 1.5. Instale o Docker
+```bash
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+```
+### 1.6. Verifique se o Docker está funcionando
+```bash
+sudo docker --version
+sudo docker run hello-world
+```
+### 1.7. (Opcional) Use Docker sem sudo
+Para usar Docker sem precisar digitar sudo toda vez:
+```bash
+sudo usermod -aG docker $USER
+```
 ---
 
 ## 2. Principais comandos do Docker
